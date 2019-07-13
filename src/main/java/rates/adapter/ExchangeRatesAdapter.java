@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
 import model.ExchangeRatesResponse;
 
@@ -18,7 +19,7 @@ import exceptions.InternalErrorException;
 
 public class ExchangeRatesAdapter {
 
-	private static final String EXCHANGE_RATE_BASE_END_POINT = "http://api.fixer.io/latest?base=%s";
+	private static final String EXCHANGE_RATE_BASE_END_POINT = "http://data.fixer.io/api/latest?base=%s&access_key=%s";
 
 	public Single<ExchangeRatesResponse> getExchangeRates(final String base) {
 		
@@ -27,7 +28,8 @@ public class ExchangeRatesAdapter {
 			public void subscribe(SingleEmitter<ExchangeRatesResponse> subscriber) {
 				
 				try {
-					String endPoint = String.format(EXCHANGE_RATE_BASE_END_POINT, base);
+					String accesskey="cbdf5e8b3e94564febe489e2f25cecd1";
+					String endPoint = String.format(EXCHANGE_RATE_BASE_END_POINT, base,accesskey);
 		    		URL obj = new URL(endPoint);
 		    		
 		    		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -59,7 +61,6 @@ public class ExchangeRatesAdapter {
     		String responseString = response.toString();
     		Gson gson = new Gson();
     		return gson.fromJson(responseString, ExchangeRatesResponse.class);
-
 		} catch (Exception e) {
 			throw new CurrencyNotFoundException();
 		} finally {
