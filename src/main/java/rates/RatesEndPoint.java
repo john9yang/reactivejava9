@@ -37,7 +37,7 @@ public class RatesEndPoint {
     public void getRates(@Suspended final AsyncResponse async, 
     		@PathParam("baseCurrency") final String baseCurrency,
     		@PathParam("counterCurrency") final String counterCurrency) {
-    	
+
     	final RateResponse response = new RateResponse();
     	final CountDownLatch outerLatch = new CountDownLatch(1);
     	
@@ -47,7 +47,7 @@ public class RatesEndPoint {
 			public void onSubscribe(Disposable d) {}
 
 			public void onSuccess(ExchangeRatesResponse exchangeRatesResponse) {
-				
+
 				if (exchangeRatesResponse.getRates().containsKey(counterCurrency)) {
 					response.setRate(exchangeRatesResponse.getRates().get(counterCurrency));					
 				} else {
@@ -62,9 +62,9 @@ public class RatesEndPoint {
 				outerLatch.countDown();
 			}
 		});
-
     	try {
     		if (!outerLatch.await(10, TimeUnit.SECONDS)) {
+				System.out.println("outerLatch timeout");
         		async.resume(new InternalErrorException());
     		}
     	} catch (Exception e) {

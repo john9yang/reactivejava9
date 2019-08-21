@@ -26,7 +26,7 @@ import io.reactivex.functions.BiFunction;
 
 public class StrongerServiceImpl implements StrongerService {
 
-	private static final String HISTORY_RATE_BASE_END_POINT = "http://api.fixer.io/%slatest?base=%s";
+	private static final String HISTORY_RATE_BASE_END_POINT = "http://data.fixer.io/api/%s?base=%s&access_key=%s";
 	private static final String DATE_FORMAT = "yyyy-MM-dd";
 
 	private ExchangeRatesAdapter ratesAdapter;
@@ -64,8 +64,9 @@ public class StrongerServiceImpl implements StrongerService {
 			public void subscribe(ObservableEmitter<ExchangeRatesResponse> emitter) throws Exception {
 				
 				try {
+					String accesskey="cbdf5e8b3e94564febe489e2f25cecd1";
 					String yesterdaysDate = getYesterdaysDateFormatted();
-					String endPoint = String.format(HISTORY_RATE_BASE_END_POINT, yesterdaysDate, baseCurrency);
+					String endPoint = String.format(HISTORY_RATE_BASE_END_POINT, yesterdaysDate, baseCurrency,accesskey);
 		    		URL obj = new URL(endPoint);
 		    		
 		    		HttpURLConnection con = (HttpURLConnection) obj.openConnection();

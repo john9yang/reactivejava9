@@ -10,7 +10,7 @@
 		<org.springframework.version>4.3.5.RELEASE</org.springframework.version>
 		<org.glassfish.jersey.version>2.25</org.glassfish.jersey.version>
 		<maven.compiler.source>1.9</maven.compiler.source>
-    		<maven.compiler.target>1.9</maven.compiler.target>
+    	<maven.compiler.target>1.9</maven.compiler.target>
 	</properties>
 
 	<dependencies>
@@ -76,7 +76,17 @@
 		          <target>1.9</target>
 		        </configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.2</version>
+                <configuration>
+					<server>tomcat7</server>
+					<username>admin</username>
+                    <password>admin</password>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
-	
+
 </project>
